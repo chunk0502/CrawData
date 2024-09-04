@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crawl Data</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 800px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #2193b0;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #6dd5ed;
+            transform: translateY(-3px);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+            font-size: 16px;
+        }
+
+        .back-link:hover {
+            color: #0056b3;
+        }
+
+        #selectors-container {
+            margin-bottom: 20px;
+        }
+
+        .selector-row {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+
+        .selector-row input[type="text"] {
+            margin-bottom: 5px;
+        }
+
+        .selector-row button {
+            background-color: #ff5722;
+            border: none;
+            color: white;
+            font-size: 14px;
+        }
+
+        .selector-row button:hover {
+            background-color: #ff3d00;
+        }
+
+        .selector-row button:active {
+            transform: translateY(1px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Crawl Data</h1>
+        <form method="post">
+            <div class="form-group">
+                <label for="url">URL:</label>
+                <input type="text" id="url" name="url" required>
+            </div>
+            <div id="selectors-container">
+                <!-- Dòng selector sẽ được thêm vào đây -->
+            </div>
+            <button type="button" id="add-selector">Add Selector</button>
+            <button type="submit">Scrape Data</button>
+        </form>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const addButton = document.getElementById('add-selector');
+            const selectorsContainer = document.getElementById('selectors-container');
+            let selectorCount = 0;
+
+            addButton.addEventListener('click', function() {
+                selectorCount++;
+                const selectorRow = document.createElement('div');
+                selectorRow.className = 'selector-row';
+                selectorRow.innerHTML = `
+                    <input type="text" name="selector_name[]" placeholder="Selector Name" required>
+                    <input type="text" name="selectors[]" placeholder="CSS Selector" required>
+                    <button type="button" class="remove-selector">Remove</button>
+                `;
+                selectorsContainer.appendChild(selectorRow);
+
+                // Thêm sự kiện cho nút xóa
+                selectorRow.querySelector('.remove-selector').addEventListener('click', function() {
+                    selectorRow.remove();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

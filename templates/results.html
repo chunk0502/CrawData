@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #333;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .table {
+            width: 100%;
+            max-width: 900px;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .table th, .table td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            text-align: left;
+            vertical-align: top; /* Align text to the top to keep cells consistent */
+            min-width: 150px; /* Minimum width to avoid shrinking */
+        }
+
+        .table th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+
+        .table-striped tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .table-striped tr:hover {
+            background-color: #ddd;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #2193b0;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #6dd5ed;
+            transform: translateY(-3px);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        a:hover {
+            color: #0056b3;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        /* Additional styling for empty table cells */
+        .table td:empty::after {
+            content: " "; /* Add a space to ensure empty cells have some height */
+            display: block;
+            height: 1px; /* Ensures the cell doesn't collapse */
+        }
+    </style>
+</head>
+<body>
+    <h1>Results</h1>
+    {% if table %}
+        <div>
+            {{ table|safe }}
+        </div>
+        <form action="{{ url_for('export_pdf') }}" method="post">
+            <input type="hidden" name="table_html" value="{{ table|e }}">
+            <button type="submit">Export to PDF</button>
+        </form>
+    {% else %}
+        <p>No data available.</p>
+    {% endif %}
+    <br>
+    <a href="{{ url_for('index') }}">Back</a>
+</body>
+</html>
